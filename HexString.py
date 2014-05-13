@@ -139,6 +139,47 @@ def str2byte(s="", prefix = "0X", suffix = ",", max_bytes=256, bytes_per_line = 
     pass
 
 
+def str2word(s="", prefix = "0X", suffix = ",", max_bytes=256, bytes_per_line = 16):
+    """
+    format: AABB... -> ...0XAA, 0XBB
+    """
+    es = extract(s, IGNORE_LIST)
+    es = '0'*(max_bytes*2 - len(es)) + es
+    ss = segment(es, 4)
+    fs = format(ss, prefix, suffix)
+
+    #display
+    display(ss, 2*len(ss))
+    display(fs, bytes_per_line)
+    print '-'*80
+    ss.reverse()
+    fs.reverse()
+    display(ss, 2*len(ss))
+    display(fs, bytes_per_line)
+
+    pass
+
+def str2dword(s="", prefix = "0X", suffix = ",", max_bytes=256, bytes_per_line = 16):
+    """
+    format: AABB... -> ...0XAA, 0XBB
+    """
+    es = extract(s, IGNORE_LIST)
+    es = '0'*(max_bytes*2 - len(es)) + es
+    ss = segment(es, 8)
+    fs = format(ss, prefix, suffix)
+
+    #display
+    display(ss, 2*len(ss))
+    display(fs, bytes_per_line)
+    print '-'*80
+    ss.reverse()
+    fs.reverse()
+    display(ss, 2*len(ss))
+    display(fs, bytes_per_line)
+
+    pass
+
+
 
 if __name__ == "__main__":
     import string, os
@@ -146,7 +187,7 @@ if __name__ == "__main__":
     nWordPerLine = 16
     nBytes = 256
     s = '''
-0123456789ABCDEF
+FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123
   '''
     #a = HexFormat(a)
 
@@ -160,10 +201,11 @@ if __name__ == "__main__":
     #for i in range(256):
     #    a += "%02x" % i
 
-    s = "00" * 16
+    #s = "FF" * 16
 
-    str2byte(s, "(byte)", ", ", 256, 16)
-
+    #str2byte(s, "(byte)0X", ", ", 256, 16)
+    str2word(s, "0X", ", ", 256, 8)
+    #str2dword(s, "0X", ", ", 256, 4)
 
 
 
